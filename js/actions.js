@@ -13,6 +13,9 @@ $(function(){
 		}
 		//alert($(this).index());
 	});	
+	$('#ncEnv').tap(function(){
+		nuevoContacto($('#ncNom').val(),$('#ncTel').val(),$('#ncMail').val())
+	});
 });
 
 function escribirArhivos(texto){
@@ -72,4 +75,30 @@ function leerArchivos(){
     function fail(evt) {
         alert(evt.target.error.code);
     }	
+}
+function nuevoContacto(nombre,tel,mail){
+	document.addEventListener("deviceready",function(){
+		var contacto=navigator.contacts.create();
+		contacto.displayname=nom;
+		contacto.nickname=nom;
+		var nombre=new ContactName();
+		nombre.givenName=nombre;
+		nombre.familyName="Prueba";
+		contacto.name=nombre;
+		var telefonos=[];
+		telefonos[0]=new ContactField("home",tel,true);
+		telefonos[1]=new ContactField("work",'123-234-2345',false);
+		contacto.phoneNumber=telefonos;
+		var correos=[];
+		correos[0]=new ContactField("home",mail,false);
+		correos[1]=new ContactField("work",'erika@e-indiga.com',true);
+		contacto.emails=correos;
+		contacto.save(function(){
+			navigator.notification.alert("Contacto guardado Satisfactoriamente",function(){
+					window.history.back();
+				},"Crear Contacto","Aceptar");
+			},function(err){
+				alert(err.code);
+				});
+		},false);
 }
