@@ -66,6 +66,7 @@ function leerArchivos(){
         reader.onloadend = function(evt) {
             $('#aLeer').text(evt.target.result);
         };
+		reader.readAsText(file);
      }
 
     function fail(evt) {
